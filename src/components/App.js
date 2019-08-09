@@ -5,9 +5,10 @@ import ProductsList from './productsList';
 
 class App extends React.PureComponent{
     
+    
     state={products:[], id:[], comments:[], id_seller:[],seller_name:[] };
     onSearchSubmit=async(term)=>{//este metodo nos ayudara a recibir el term del searchBar para hacer las peticiones al API
-    
+
         const response=await axios.get('https://api.mercadolibre.com/sites/MLC/search',{
             params:{
                 q: term
@@ -18,10 +19,12 @@ class App extends React.PureComponent{
         this.setState({products:response.data.results, id:this.state.products.map(producto=>producto.id),id_seller:this.state.products.map(product=>product.seller.id)});
         this.setState({id:this.state.products.map(producto=>producto.id)}); 
         this.setState({id_seller:this.state.products.map(product=>product.seller.id)});
-        for(var i=0;i<this.state.id_seller.length;i++){
-            var SELLER_ID = this.state.id_seller[i];
+        const id_unicos= [...new Set(this.state.id_seller)];
+        for(var i=0;i<id_unicos.length;i++){
+            var SELLER_ID = id_unicos[i];
             var response2=await axios.get(`https://api.mercadolibre.com/users/${SELLER_ID}`);
             this.setState({seller_name:[...this.state.seller_name, response2]});
+            //this.setState({seller_name:getUnique(this.state.seller_name,'data.id')});
             }
         console.log(this.state.products);
         console.log(this.state.id);

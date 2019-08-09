@@ -25,7 +25,7 @@ const productsList=(props)=>{
                     <li><h3>{product.title}</h3></li>
                     <li><h4>Precio: {product.price} COP</h4></li>
                     {props.nombre_seller.map((nombre) => (
-                        (product.seller.id===nombre.data.id? <div><li><h4>Seller: {nombre.data.nickname}</h4></li></div>:null)
+                        (product.seller.id===nombre.data.id? <div key={nombre.data.id}><li><h4>Seller: {nombre.data.nickname}</h4></li></div>:null)
                         ))}
                     <li><h4>Seller id: {product.seller.id}</h4></li>
                     <li><h4>Cantidades disponibles: {product.available_quantity}</h4></li>
