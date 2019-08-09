@@ -1,10 +1,7 @@
 import React from 'react';
 import './productsList.css';
-import SellerName from './SellerName';
 
 const productsList=(props)=>{
-
-    const nombre_seller = props.nombre_seller;
 
     const nombres=[];
 
@@ -27,7 +24,9 @@ const productsList=(props)=>{
                 <ul className="ul">
                     <li><h3>{product.title}</h3></li>
                     <li><h4>Precio: {product.price} COP</h4></li>
-                    <SellerName nombre_seller={nombre_seller} id={product.seller.id} />
+                    {props.nombre_seller.map((nombre) => (
+                        (product.seller.id===nombre.data.id? <div><li><h4>Seller: {nombre.data.nickname}</h4></li></div>:null)
+                        ))}
                     <li><h4>Seller id: {product.seller.id}</h4></li>
                     <li><h4>Cantidades disponibles: {product.available_quantity}</h4></li>
                 </ul>

@@ -18,6 +18,11 @@ class App extends React.PureComponent{
         this.setState({products:response.data.results, id:this.state.products.map(producto=>producto.id),id_seller:this.state.products.map(product=>product.seller.id)});
         this.setState({id:this.state.products.map(producto=>producto.id)}); 
         this.setState({id_seller:this.state.products.map(product=>product.seller.id)});
+        for(var i=0;i<this.state.id_seller.length;i++){
+            var SELLER_ID = this.state.id_seller[i];
+            var response2=await axios.get(`https://api.mercadolibre.com/users/${SELLER_ID}`);
+            this.setState({seller_name:[...this.state.seller_name, response2]});
+            }
         console.log(this.state.products);
         console.log(this.state.id);
         console.log(this.state.id_seller);
@@ -27,13 +32,6 @@ class App extends React.PureComponent{
         //var response1=await axios.get(`https://api.mercadolibre.com/items/MLC456679163/description`);
         //this.setState({comments:[...this.state.comments, response1]});
         //}
-        
-
-        for(var i=0;i<this.state.id_seller.length;i++){
-            var SELLER_ID = this.state.id_seller[i];
-            var response2=await axios.get(`https://api.mercadolibre.com/users/${SELLER_ID}`);
-            this.setState({seller_name:[...this.state.seller_name, response2]});
-            }
 
 
         console.log(this.state.comments);
