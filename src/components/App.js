@@ -5,10 +5,11 @@ import ProductsList from './productsList';
 
 class App extends React.PureComponent{
     
-    
     state={products:[], id:[], comments:[], id_seller:[],seller_name:[] };
+    
     onSearchSubmit=async(term)=>{//este metodo nos ayudara a recibir el term del searchBar para hacer las peticiones al API
 
+        this.setState({products:[], id:[], comments:[], id_seller:[],seller_name:[]});
         const response=await axios.get('https://api.mercadolibre.com/sites/MLC/search',{
             params:{
                 q: term
@@ -19,7 +20,7 @@ class App extends React.PureComponent{
         this.setState({products:response.data.results, id:this.state.products.map(producto=>producto.id),id_seller:this.state.products.map(product=>product.seller.id)});
         this.setState({id:this.state.products.map(producto=>producto.id)}); 
         this.setState({id_seller:this.state.products.map(product=>product.seller.id)});
-        const id_unicos= [...new Set(this.state.id_seller)];
+        var id_unicos= [...new Set(this.state.id_seller)];
         for(var i=0;i<id_unicos.length;i++){
             var SELLER_ID = id_unicos[i];
             var response2=await axios.get(`https://api.mercadolibre.com/users/${SELLER_ID}`);
@@ -40,7 +41,6 @@ class App extends React.PureComponent{
         console.log(this.state.comments);
         console.log(this.state.seller_name);
         
-
     }
 
     render(){
@@ -52,6 +52,15 @@ class App extends React.PureComponent{
             </div>
             );
     }
+
+    /*initialState() {
+        return {products:[], id:[], comments:[], id_seller:[],seller_name:[] };
+    }
+
+    resetBuilder() {
+        this.setState(this.initialState);
+    }*/
+    
 
 }
 
